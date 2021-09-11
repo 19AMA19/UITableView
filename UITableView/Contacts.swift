@@ -1,29 +1,40 @@
-//
-//  Contacts.swift
-//  UITableView
-//
-//  Created by Abdulkarim Alansari on 04/02/1443 AH.
-//
 
 import UIKit
 
-class Contacts: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+class Contacts: UIViewController, UITableViewDelegate, UITableViewDataSource{
+   
     
 
-    /*
-    // MARK: - Navigation
+    @IBOutlet weak var showContacts: UITableView!
+    
+   var arrSection = ["A","S","M","Z"]
+   var arrRows = [["Abdulkarim", "Ali", "Abdulaziz"],["Saleh", "Saud"],["Mohammed", "Masad"],["Ziyad", "Zahra"]]
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        showContacts.delegate = self
+        showContacts.dataSource = self
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arrRows[section].count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = showContacts.dequeueReusableCell(withIdentifier: "Conts", for: indexPath)
+        showContacts.beginUpdates()
+        showContacts.endUpdates()
+        cell.textLabel?.text = arrRows[indexPath.section][indexPath.row]
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return arrSection.count
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return arrSection[section]
+    }
+    
 }
